@@ -32,30 +32,35 @@ BoxLayout:
 '''
 
 
+
 class TwistedSampleApp(App):
 
     def build(self):
         self.service = None
-        self.start_service()
         self.root = Builder.load_string(KV)
         return self.root
 
     def on_resume(self):
-        self.start_service()
+        if self.service:
+            self.start_service()
 
-    def start_service(self):
+    def start_service(self, finishing=False):
         service = autoclass(SERVICE_NAME)
         mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
         argument = ''
+        if finishing:
+            argument = '{"stop_service": 1}'
         service.start(mActivity, argument)
-        self.service = service
+        if finishing:
+            self.service = None
+        else:
+            self.service = service
 
     def stop_service(self):
-        if self.service:
-            service = autoclass(SERVICE_NAME)
-            mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
-            self.service.stop(mActivity)
-            self.service = None
+        service = autoclass(SERVICE_NAME)
+        mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
+        service.stop(mActivity)
+        self.start_service(finishing=True)
 
 
 if __name__ == '__main__':

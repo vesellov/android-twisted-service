@@ -48,19 +48,6 @@ Now connect your device with USB cable and install APK file you just created:
 On your device find "TwistedSample" application and start it.
 You will see a lot of output in another console window and will be able to monitor the service.
 
-
-#### Test Twisted server
-
-Twisted web server is running now on your Android on port 18000.
-Normally you can just open `http://localhost:18000` on same host but on Android it is different.
-You need to know the IP address which you can use to actually open `localhost`.
-To do that use `ifconfig` via `adb` and find another :
-
-        adb shell ifconfig | grep "inet addr"
-        inet addr:127.0.0.1  Mask:255.0.0.0 
-        inet addr:xxx.xxx.xxx.xxx  P-t-P:xxx.xxx.xxx.xxx  Mask:255.255.255.0 
-
-
-Now you can open web browser on your Android and open `http://xxx.xxx.xxx.xxx:18000`.
+Now you can open web browser on your Android and open `http://127.0.0.1:18000`.
 
 Hello, world!

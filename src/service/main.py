@@ -72,6 +72,13 @@ def set_foreground():
 
 
 def main():
+    argument = os.environ.get('PYTHON_SERVICE_ARGUMENT', 'null')
+    argument = json.loads(argument) if argument else None
+    argument = {} if argument is None else argument
+    logging.info('argument=%r', argument)
+    if argument.get('stop_service'):
+        logging.info('service to be stopped')
+        return
     try:
         set_foreground()
         set_auto_restart_service()
